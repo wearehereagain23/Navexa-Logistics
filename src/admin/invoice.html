@@ -1,0 +1,698 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function (event) {
+
+            const showNavbar = (toggleId, navId, bodyId, headerId) => {
+                const toggle = document.getElementById(toggleId),
+                    nav = document.getElementById(navId),
+                    bodypd = document.getElementById(bodyId),
+                    headerpd = document.getElementById(headerId)
+
+                // Validate that all variables exist
+                if (toggle && nav && bodypd && headerpd) {
+                    toggle.addEventListener('click', () => {
+                        // show navbar
+                        nav.classList.toggle('show')
+                        // change icon
+                        toggle.classList.toggle('bx-x')
+                        // add padding to body
+                        bodypd.classList.toggle('body-pd')
+                        // add padding to header
+                        headerpd.classList.toggle('body-pd')
+                    })
+                }
+            }
+
+            showNavbar('header-toggle', 'nav-bar', 'body-pd', 'header')
+
+            /*===== LINK ACTIVE =====*/
+            const linkColor = document.querySelectorAll('.nav_link')
+
+            function colorLink() {
+                if (linkColor) {
+                    linkColor.forEach(l => l.classList.remove('active'))
+                    this.classList.add('active')
+                }
+            }
+            linkColor.forEach(l => l.addEventListener('click', colorLink))
+
+            // Your code to run since DOM is loaded and ready
+        });
+
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
+    <script type="module">
+
+        const url = window.location.search;
+        const urldata = new URLSearchParams(url);
+        const i = urldata.get("i");
+        if(!i){
+            window.location.href="https://navexa-logistics.web.app/" 
+        }
+
+        let invoiceCode = Math.floor(Math.random() * 373254);
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc, query, onSnapshot, collection,  updateDoc, addDoc, } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBFctcfjEr7DCC5VJreUV8NOyopCvG1xis",
+  authDomain: "navexa-logistics.firebaseapp.com",
+  projectId: "navexa-logistics",
+  storageBucket: "navexa-logistics.firebasestorage.app",
+  messagingSenderId: "570165208188",
+  appId: "1:570165208188:web:3b457ce114b8ca86db95f9"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+
+       
+
+
+                const unsub = onSnapshot(doc(db, "tracking", i), (doc) => {
+                    if (doc.exists()) {
+                        document.getElementById("packagename").value = doc.data().package;
+                        document.getElementById("quantity").value = doc.data().totalquantity;
+                        document.getElementById("weight").value = doc.data().totalweight;
+                        document.getElementById("description").value = doc.data().des;
+                        document.getElementById("exd").value = doc.data().express;
+                        document.getElementById("scd").value = doc.data().second;
+                        document.getElementById("tcd").value = doc.data().third;
+                        document.getElementById("p1").value = doc.data().p1;
+                        document.getElementById("p2").value = doc.data().p2;
+                        document.getElementById("p3").value = doc.data().p3;
+                 
+
+
+  
+
+
+          
+
+                            }
+                        })
+
+
+                        const formDAT = document.getElementById('xcvss');
+
+                        formDAT.addEventListener('submit', async (event) => {
+                            event.preventDefault();
+
+                            const formData = new FormData(formDAT);
+                            let packagename = (formData.get('packagename'));
+                            let quantity = (formData.get('quantity'));
+                            let weight = (formData.get('weight'));
+                            let description = (formData.get('description'));
+                            let exd = (formData.get('exd'));
+                            let scd = (formData.get('scd'));
+                            let tcd = (formData.get('tcd'));
+
+                            if (formData) {
+
+                                const washingtonRef = doc(db, "tracking", i);
+                                await updateDoc(washingtonRef, {
+                                    package: packagename,
+                                    totalquantity: quantity,
+                                    totalweight: weight,
+                                    des: description,
+                                    express: exd,
+                                    second: scd,
+                                    third: tcd,
+                                }).then(() => {
+                                    notyf.success('saved');
+                                    location.reload();
+                                })
+                            }
+                        })
+
+
+                        //SENDING INVOICE
+
+
+                              const formDAT2 = document.getElementById('inv');
+
+                    formDAT2.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const formData = new FormData(formDAT2);
+                        let email = (formData.get('email'));
+                        let p1 = (formData.get('p1'));
+                        let p2 = (formData.get('p2'));
+                        let p3 = (formData.get('p3'));
+                        let name = (formData.get('name'));
+
+                        if (formData) {
+
+                            const washingtonRef = doc(db, "tracking", i);
+                            await updateDoc(washingtonRef, {
+                                p1: document.getElementById('p1').value,
+                                p2: document.getElementById('p2').value,
+                                p3: document.getElementById('p3').value,
+                            }).then(async() => {
+
+                                let formData3 = {
+                                useremail: email,
+                                p1: document.getElementById('p1').value,
+                                p2: document.getElementById('p2').value,
+                                p3: document.getElementById('p3').value,
+                                packagename: document.getElementById('packagename').value,
+                                quantity: document.getElementById('quantity').value,
+                                weight: document.getElementById('weight').value,
+                                description: document.getElementById('description').value,
+                                exd: document.getElementById('exd').value,
+                                scd: document.getElementById('scd').value,
+                                tcd: document.getElementById('tcd').value,
+                                code: invoiceCode,
+                                name: name,
+                                }
+
+                                
+                            const options = {
+                                method: 'POST',
+
+                                headers: {
+                                    'Content-type': 'application/json'
+                                },
+                                body: JSON.stringify(formData3),
+                            }
+                            const respones = await fetch('/admin/invoice.html', options);
+                            respones.json().then(async (dd) => {
+                                notyf.success('sent');
+                                location.reload();
+
+                            })
+                                        })
+                                    }
+                                })
+
+  
+
+
+    </script>
+
+
+</head>
+
+<body id="body-pd">
+    <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+
+    <script>
+        var notyf = new Notyf({
+            duration: 2000,
+            position: {
+                x: 'right',
+                y: 'top',
+            },
+        });
+
+    </script>
+
+
+    <div class="l-navbar" id="nav-bar">
+    
+    </div>
+    <!--Container Main start-->
+
+
+
+
+    <style>
+        .pop {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            border: 0px;
+            background-color: transparent;
+        }
+
+        .inpop {
+            display: flex;
+            height: 70vh;
+            width: 100%;
+        }
+
+        .logcontent {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .log2 {
+            background-color: rgb(255, 255, 255);
+            padding: 3%;
+            box-shadow: 10px 11px 48px -3px rgba(0, 0, 0, 0.84);
+            -webkit-box-shadow: 10px 11px 48px -3px rgba(0, 0, 0, 0.84);
+            -moz-box-shadow: 10px 11px 48px -3px rgba(0, 0, 0, 0.84);
+        }
+
+        @media screen and (max-width:992px) {
+            .log2 {
+                padding: 5%;
+            }
+        }
+
+        .btt1 {
+            background-color: red;
+            color: white;
+            border: 0px;
+            padding: 2%;
+        }
+
+        .btt1:hover {
+            background-color: rgb(157, 0, 0);
+        }
+
+        .btt2 {
+            background-color: rgb(1, 184, 1);
+            color: white;
+            border: 0px;
+            padding: 2%;
+        }
+
+        .btt2:hover {
+            background-color: rgb(1, 67, 1);
+        }
+    </style>
+
+
+
+
+
+    <div class="height-100 bg-light">
+        <h4 style="font-family: 'Courier New', Courier, monospace ;">Package & Invoice</h4>
+     
+
+
+
+
+        <div class="sft">
+            <div class="fmb">
+                <form class="thf" id="xcvss"
+                    style="font-family: 'Courier New', Courier, monospace; margin-bottom: 5%;">
+
+                  
+                    <div class="inf">
+                        <label for="name-2"><strong>Package name</strong></label>
+                        <input required type="text" class="w-input" name="packagename" placeholder="" id="packagename" />
+                    </div>
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Quantity</strong></label>
+                        <input required type="text" class="w-input" name="quantity" placeholder="" id="quantity" />
+                    </div>
+
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Weight</strong></label>
+                        <input required type="text" class="w-input" name="weight" placeholder="" id="weight" />
+                    </div>
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Description</strong></label>
+                        <input required type="text" class="w-input" name="description"  placeholder=""
+                            id="description" />
+                    </div> <br>
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Express delivery</strong></label>
+                        <input required type="text" class="w-input" name="exd" placeholder="" id="exd" />
+                    </div>
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Second class delivery</strong></label>
+                        <input required type="text" class="w-input" name="scd" placeholder="" id="scd" />
+                    </div>
+
+                    <div class="inf">
+                        <label for="email-3"><strong>Third class delivery</strong></label>
+                        <input required type="text" class="w-input" name="tcd" placeholder="" id="tcd" />
+                    </div>
+
+
+                    <input type="submit" value="Save" data-wait="Please wait..." class="w-button" />
+
+
+
+                </form>
+            </div>
+        </div>
+
+                            <!-- SENDING INVOICE TO EMAIL -->
+
+
+        <div class="sft">
+            <div class="fmb">
+                <h3>Send Invoice</h3>
+                <form class="thf" id="inv"
+                    style="font-family: 'Courier New', Courier, monospace; ">
+
+                    <div class="inf">
+                        <label for="name-2"><strong>Receiver name</strong></label>
+                        <input required type="text" class="w-input" name="name" placeholder="" id="name" />
+                    </div>
+
+                    <div class="inf">
+                        <label for="name-2"><strong>Receiver email</strong></label>
+                        <input required type="text" class="w-input" name="email" placeholder="" id="email" />
+                    </div>
+                    <br>
+                    
+                    <div class="inf" style=" width: 100%;">
+                        <h3>Invoice billing FMT</h3>
+                        <label for="email-3"><strong>Paragraph1</strong></label>
+                        <textarea id="p1" name="p1" rows="4" cols="50"></textarea>
+                    </div>
+
+                    <div class="inf" style=" width: 100%;">
+                        <label for="email-3"><strong>Paragraph2</strong></label>
+                        <textarea id="p2" name="p2" rows="4" cols="50"></textarea>
+                    </div>
+
+                    <div class="inf" style=" width: 100%;">
+                        <label for="email-3"><strong>Paragraph3</strong></label>
+                        <textarea id="p3" name="p3" rows="4" cols="50"></textarea>
+                    </div>
+
+
+                    <input type="submit" value="Send Invoice" data-wait="Please wait..." class="w-button" />
+
+
+
+                </form>
+
+                <a href="https://navexa-logistics.web.app/Admin/dash.html" class="w-button" style="text-align: center; margin-top: 10%;">←Go Back</a>
+            </div>
+        </div>
+    </div>
+    <!--Container Main end-->
+    <style>
+        .w-button {
+            width: 200%;
+            background-color: rgba(250, 144, 32, 0.794);
+            color: white;
+            border: 0px;
+            padding-top: 1%;
+            padding-bottom: 1%;
+        }
+
+        .w-button:hover {
+            background-color: rgb(78, 40, 0);
+        }
+
+        .fmb {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+
+        }
+
+        .w-input {
+            padding: 2%;
+            /* width: 155%; */
+        }
+
+        .thf {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            background-color: rgb(186, 186, 186);
+            width: 100%;
+
+
+        }
+
+        .inf {
+            display: flex;
+            flex-direction: column;
+            margin: 2%;
+            background-color: rgba(152, 152, 152, 0.686);
+            padding: 2%;
+
+        }
+
+        .sft {
+            margin-top: 3%;
+            display: flex;
+
+        }
+
+        @media screen and (max-width:992px) {
+            .ss {
+                width: 100%;
+                padding: 2%;
+            }
+        }
+
+        .inform {
+            display: flex;
+            gap: 20px;
+            background-color: rgb(222, 222, 222);
+            padding: 2%;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .form {
+            flex-direction: column;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap
+        }
+
+        .fdiv1 {
+            background-color: rgba(129, 129, 129, 0.472);
+            padding: 2%;
+            display: flex;
+            justify-content: space-around;
+            /* align-items: center; */
+            flex-wrap: wrap
+        }
+
+        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
+
+        :root {
+            --header-height: 3rem;
+            --nav-width: 68px;
+            --first-color: #442302;
+            --first-color-light: #AFA5D9;
+            --white-color: #F7F6FB;
+            --body-font: 'Nunito', sans-serif;
+            --normal-font-size: 1rem;
+            --z-fixed: 100
+        }
+
+        *,
+        ::before,
+        ::after {
+            box-sizing: border-box
+        }
+
+        body {
+            position: relative;
+            margin: var(--header-height) 0 0 0;
+            padding: 0 1rem;
+            font-family: var(--body-font);
+            font-size: var(--normal-font-size);
+            transition: .5s
+        }
+
+        a {
+            text-decoration: none
+        }
+
+        .header {
+            width: 100%;
+            height: var(--header-height);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 1rem;
+            background-color: var(--white-color);
+            z-index: var(--z-fixed);
+            transition: .5s
+        }
+
+        .header_toggle {
+            color: var(--first-color);
+            font-size: 1.5rem;
+            cursor: pointer
+        }
+
+        .header_img {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            border-radius: 50%;
+            overflow: hidden
+        }
+
+        .header_img img {
+            width: 40px
+        }
+
+        .l-navbar {
+            position: fixed;
+            top: 0;
+            left: -30%;
+            width: var(--nav-width);
+            height: 100vh;
+            background-color: var(--first-color);
+            padding: .5rem 1rem 0 0;
+            transition: .5s;
+            z-index: var(--z-fixed)
+        }
+
+        .nav {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden
+        }
+
+        .nav_logo,
+        .nav_link {
+            display: grid;
+            grid-template-columns: max-content max-content;
+            align-items: center;
+            column-gap: 1rem;
+            padding: .5rem 0 .5rem 1.5rem
+        }
+
+        .nav_logo {
+            margin-bottom: 2rem
+        }
+
+        .nav_logo-icon {
+            font-size: 1.25rem;
+            color: var(--white-color)
+        }
+
+        .nav_logo-name {
+            color: var(--white-color);
+            font-weight: 700
+        }
+
+        .nav_link {
+            position: relative;
+            color: var(--first-color-light);
+            margin-bottom: 1.5rem;
+            transition: .3s
+        }
+
+        .nav_link:hover {
+            color: var(--white-color)
+        }
+
+        .nav_icon {
+            font-size: 1.25rem
+        }
+
+        .show {
+            left: 0
+        }
+
+        .body-pd {
+            padding-left: calc(var(--nav-width) + 1rem)
+        }
+
+        .active {
+            color: var(--white-color)
+        }
+
+        .active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 2px;
+            height: 32px;
+            background-color: var(--white-color)
+        }
+
+        .height-100 {
+            height: 100vh
+        }
+
+        @media screen and (min-width: 768px) {
+            body {
+                margin: calc(var(--header-height) + 1rem) 0 0 0;
+                padding-left: calc(var(--nav-width) + 2rem)
+            }
+
+            .header {
+                height: calc(var(--header-height) + 1rem);
+                padding: 0 2rem 0 calc(var(--nav-width) + 2rem)
+            }
+
+            .header_img {
+                width: 40px;
+                height: 40px
+            }
+
+            .header_img img {
+                width: 45px
+            }
+
+            .l-navbar {
+                left: 0;
+                padding: 1rem 1rem 0 0
+            }
+
+            .show {
+                width: calc(var(--nav-width) + 156px)
+            }
+
+            .body-pd {
+                padding-left: calc(var(--nav-width) + 188px)
+            }
+        }
+
+        .mgsize {
+            width: 15%;
+        }
+
+        @media screen and (max-width:992px) {
+            .mgsize {
+                width: 13%;
+
+            }
+        }
+
+        .butt {
+            /* background-color: transparent; */
+            width: 100%;
+            border: 0px;
+            color: rgb(38, 67, 38);
+        }
+    </style>
+    <script src="//code.tidio.co/1qetexy56eew80x5keufpgetzuz67l8g.js" async></script>
+
+
+</body>
+
+</html>
