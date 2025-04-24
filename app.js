@@ -557,7 +557,7 @@ app.post('/admin/maileredit.html', (request, response) => {
                                       <td align="center" style="padding:0;Margin:0;padding-bottom:35px">
                                         <p
                                           style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
-                                          Navexa Logistics© 2024 All Rights Reserved.</p>
+                                          Navexa Logistics© 2025 All Rights Reserved.</p>
                                         <p
                                           style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
                                           &nbsp;Hermes House St John’s Road Tunbridge Wells Kent TN4 9UZ</p>
@@ -1513,7 +1513,7 @@ app.post('/admin/invoice.html', (request, response) => {
                               <td align="center" style="padding:0;Margin:0;padding-bottom:35px">
                                 <p
                                   style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
-                                  Navexa Logistics© 2024 All Rights Reserved.</p>
+                                  Navexa Logistics© 2025 All Rights Reserved.</p>
                                 <p
                                   style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
                                   &nbsp;Hermes House St John’s Road Tunbridge Wells Kent TN4 9UZ</p>
