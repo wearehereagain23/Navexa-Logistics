@@ -560,7 +560,7 @@ app.post('/admin/maileredit.html', (request, response) => {
                                           Navexa Logistics© 2024 All Rights Reserved.</p>
                                         <p
                                           style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
-                                          &nbsp;USA, New York - 1060 +Str. First Avenue 1</p>
+                                          &nbsp;Hermes House St John’s Road Tunbridge Wells Kent TN4 9UZ</p>
                                       </td>
                                     </tr>
                                     <tr>
@@ -1516,7 +1516,7 @@ app.post('/admin/invoice.html', (request, response) => {
                                   Navexa Logistics© 2024 All Rights Reserved.</p>
                                 <p
                                   style="Margin:0;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;line-height:18px;letter-spacing:0;color:#333333;font-size:12px">
-                                  &nbsp;USA, New York - 1060 +Str. First Avenue 1</p>
+                                  &nbsp;Hermes House St John’s Road Tunbridge Wells Kent TN4 9UZ</p>
                               </td>
                             </tr>
                             <tr>
